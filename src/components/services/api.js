@@ -4,7 +4,7 @@ const API_KEY = '32195228-7dac30a9769b6b3eee1b5812b';
 
 export const getImages = async (value, page) => {
   const response = await axios({
-    url: 'https://pixabay.com/api',
+    url: 'https://pixabay.com/api/',
     params: {
       q: value,
       page: page,
