@@ -6,8 +6,7 @@ export const getImages = async (value, page) => {
   const response = await axios({
     url: 'https://pixabay.com/api',
     headers: {
-      'Content-Location':
-        'https://sulimovsky.github.io/goit-react-hw-03-image-finder/',
+      Location: 'https://sulimovsky.github.io/goit-react-hw-03-image-finder/',
     },
     params: {
       q: value,
