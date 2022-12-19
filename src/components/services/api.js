@@ -1,12 +1,14 @@
 import axios from 'axios';
 
+const API_KEY = '23597870-e543dfa35b3f83e92b336bdec';
+
 export const getImages = async (value, page) => {
   const response = await axios({
     url: 'https://pixabay.com/api',
     params: {
       q: value,
       page: page,
-      key: process.env.REACT_APP_API_KEY,
+      key: API_KEY,
       image_type: 'photo',
       orientation: 'horizontal',
       per_page: 12,
