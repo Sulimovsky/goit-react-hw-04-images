@@ -5,6 +5,10 @@ const API_KEY = '23597870-e543dfa35b3f83e92b336bdec';
 export const getImages = async (value, page) => {
   const response = await axios({
     url: 'https://pixabay.com/api',
+    headers: {
+      'Content-Location':
+        'https://sulimovsky.github.io/goit-react-hw-03-image-finder/',
+    },
     params: {
       q: value,
       page: page,
