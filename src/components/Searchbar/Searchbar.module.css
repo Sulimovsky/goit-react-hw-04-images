@@ -1,9 +1,12 @@
 .searchbar {
   display: flex;
   align-items: center;
-  justify-content: center;
   padding: 30px 15px;
-  background-color: #6981e9;
+  background-color: #57b057;
+}
+
+.nav {
+  margin-right: 50px;
 }
 
 .form {

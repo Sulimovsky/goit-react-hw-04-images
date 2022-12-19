@@ -30,6 +30,15 @@ class Searchbar extends Component {
   render() {
     return (
       <header className={css.searchbar}>
+        <nav className={css.nav}>
+          <a href="https://pixabay.com/">
+            <img
+              src="https://pixabay.com/static/img/public/leaderboard_b.png"
+              alt="Pixabay"
+              width="350"
+            />
+          </a>
+        </nav>
         <form className={css.form} onSubmit={this.handleSubmit}>
           <button type="submit" className={css.button} aria-label="search">
             <AiOutlineSearch size="24" />
