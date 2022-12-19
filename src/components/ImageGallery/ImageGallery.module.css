@@ -1,0 +1,9 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.item {
+  flex-basis: calc((100% - 10px * 3) / 4);
+  cursor: pointer;
+}
