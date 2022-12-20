@@ -44,7 +44,7 @@ class App extends Component {
 
   addPage = () => {
     this.setState(pS => ({
-      page: (pS.page += 1),
+      page: pS.page + 1,
     }));
   };
 
