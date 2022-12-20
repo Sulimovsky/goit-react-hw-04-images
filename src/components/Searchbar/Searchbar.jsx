@@ -25,9 +25,15 @@ class Searchbar extends Component {
       return;
     }
     this.props.onSubmit(value);
+    this.resetForm();
+  };
+
+  resetForm = () => {
+    this.setState({ value: '' });
   };
 
   render() {
+    const { value } = this.state;
     return (
       <header className={css.searchbar}>
         <nav className={css.nav}>
@@ -47,6 +53,7 @@ class Searchbar extends Component {
           <input
             className={css.input}
             type="text"
+            value={value}
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"

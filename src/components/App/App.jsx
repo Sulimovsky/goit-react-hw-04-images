@@ -12,6 +12,7 @@ class App extends Component {
     page: 1,
     value: '',
     images: [],
+    totalImg: null,
     isLoading: false,
   };
 
@@ -27,6 +28,7 @@ class App extends Component {
         }
         this.setState(pS => ({
           images: [...pS.images, ...response.hits],
+          totalImg: response.total,
         }));
       } catch (error) {
         toast.error(
@@ -49,14 +51,17 @@ class App extends Component {
   };
 
   render() {
-    const { images, isLoading } = this.state;
+    const { images, isLoading, totalImg } = this.state;
+    const totalHits = images.length === totalImg;
     return (
       <>
         <Searchbar onSubmit={this.getNewImages} />
         <Section>
           <ImageGallery images={images} />
           {isLoading && <Loader />}
-          {images.length !== 0 && <Button onAddPage={this.addPage} />}
+          {images.length !== 0 && !totalHits && (
+            <Button onAddPage={this.addPage} />
+          )}
         </Section>
         <Toaster position="bottom-right" reverseOrder={false} />
       </>
