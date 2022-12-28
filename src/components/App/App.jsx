@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import Section from 'components/common/Section/Section';
 import Searchbar from 'components/Searchbar/Searchbar';
@@ -7,66 +7,56 @@ import ImageGallery from 'components/ImageGallery/ImageGallery';
 import Loader from 'components/Loader/Loader';
 import Button from 'components/Button/Button';
 
-class App extends Component {
-  state = {
-    page: 1,
-    value: '',
-    images: [],
-    totalImg: null,
-    isLoading: false,
-  };
+const App = () => {
+  const [page, setPage] = useState(1);
+  const [value, setValue] = useState('');
+  const [images, setImages] = useState([]);
+  const [totalImg, setTotalImg] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  async componentDidUpdate(pP, pS) {
-    const { page, value } = this.state;
-
-    if (pS.page !== page || pS.value !== value) {
+  useEffect(() => {
+    if (value === '') {
+      return;
+    }
+    (async function () {
       try {
-        this.setState({ isLoading: true });
-        const response = await API.getImages(value, page);
-        if (response.hits.length === 0) {
+        setIsLoading(true);
+        const respone = await API.getImages(value, page);
+        if (respone.hits.length === 0) {
           toast.error('Enter the correct value.');
         }
-        this.setState(pS => ({
-          images: [...pS.images, ...response.hits],
-          totalImg: response.total,
-        }));
-      } catch (error) {
+        setImages(pS => [...pS, ...respone.hits]);
+        setTotalImg(respone.total);
+      } catch {
         toast.error(
           'Something went wrong. Reload the page and try again, please.'
         );
       } finally {
-        this.setState({ isLoading: false });
+        setIsLoading(false);
       }
-    }
-  }
+    })();
+  }, [value, page]);
 
-  getNewImages = async value => {
-    this.setState({ value, page: 1, images: [] });
+  const getNewImages = async value => {
+    setValue(value);
+    setPage(1);
+    setImages([]);
   };
 
-  addPage = () => {
-    this.setState(pS => ({
-      page: pS.page + 1,
-    }));
-  };
-
-  render() {
-    const { images, isLoading, totalImg } = this.state;
-    const totalHits = images.length === totalImg;
-    return (
-      <>
-        <Searchbar onSubmit={this.getNewImages} />
-        <Section>
-          <ImageGallery images={images} />
-          {isLoading && <Loader />}
-          {images.length !== 0 && !totalHits && (
-            <Button onAddPage={this.addPage} />
-          )}
-        </Section>
-        <Toaster position="bottom-right" reverseOrder={false} />
-      </>
-    );
-  }
-}
+  const totalHits = images.length === totalImg;
+  return (
+    <>
+      <Searchbar onSubmit={getNewImages} />
+      <Section>
+        <ImageGallery images={images} />
+        {isLoading && <Loader />}
+        {images.length !== 0 && !totalHits && (
+          <Button onAddPage={() => setPage(pS => pS + 1)} />
+        )}
+      </Section>
+      <Toaster position="bottom-right" reverseOrder={false} />
+    </>
+  );
+};
 
 export default App;
